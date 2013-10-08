@@ -8,8 +8,83 @@
 <body>
 	<canvas id="canvas"></canvas>
 	<script>
+function Tileset(level, index, atlas) {
+	var descriptor = level.tilesets[index];
+	var columns = descriptor.imagewidth / descriptor.tilewidth;
+
+	this.drawTile = function (context, index, x, y) {
+		if (--index) {
+			context.drawImage(
+				atlas,
+				(index % columns) * descriptor.tilewidth,
+				Math.floor(index / columns) * descriptor.tileheight,
+				descriptor.tilewidth,
+				descriptor.tileheight,
+				x * descriptor.tilewidth,
+				y * descriptor.tileheight,
+				descriptor.tilewidth,
+				descriptor.tileheight
+				);
+		}
+	};
+}
+
+function startGame(level, tiles) {
+	var view = {
+		x: 0,
+		y: 0
+	};
+
+	var canvas = $('canvas#canvas');
+
+	var width = canvas.innerWidth();
+	var height = canvas.innerHeight();
+	canvas.attr({
+		width: width,
+		height: height
+	});
+
+	var context = canvas[0].getContext('2d');
+
+	var tileset = new Tileset(level, 0, tiles);
+
+	function draw() {
+		context.fillRect(0, 0, width, height);
+		var layers = level.layers;
+		var x0 = Math.floor(view.x / level.tilewidth);
+		var y0 = Math.floor(view.y / level.tileheight);
+		for (var i = 0; i < layers.length; i++) {
+			if ((layers[i].type === 'tilelayer') && layers[i].visible) {
+				var layer = layers[i];
+				var data = layer.data;
+				var minX = Math.floor(view.x / level.tilewidth);
+				var minY = Math.floor(view.y / level.tileheight);
+				var maxX = Math.min(x0 + width / level.tilewidth, layer.width);
+				var maxY = Math.min(y0 + height / level.tileheight, layer.height);
+				for (var x = minX; x < maxX; x++) {
+					for (var y = minY; y < maxY; y++) {
+						tileset.drawTile(context, data[y * level.width + x], x, y);
+					}
+				}
+			}
+		}
+	}
+
+	function loop() {
+		draw();
+		requestAnimationFrame(loop);
+	}
+	requestAnimationFrame(loop);
+}
+
 $(window).load(function () {
-	// TODO
+	$.getJSON('level.json', function (level) {
+		var tiles = new Image();
+		tiles.onload = function () {
+			startGame(level, tiles);
+		};
+		tiles.src = 'tiles.png';
+	});
 });
 	</script>
 </body>
