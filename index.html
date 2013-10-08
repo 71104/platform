@@ -4,31 +4,11 @@
 	<title>Scrolling Platform</title>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<script src="jquery-2.0.3.min.js"></script>
+	<script src="Tileset.js"></script>
 </head>
 <body>
 	<canvas id="canvas"></canvas>
 	<script>
-function Tileset(level, index, atlas) {
-	var descriptor = level.tilesets[index];
-	var columns = descriptor.imagewidth / descriptor.tilewidth;
-
-	this.drawTile = function (context, index, x, y) {
-		if (--index) {
-			context.drawImage(
-				atlas,
-				(index % columns) * descriptor.tilewidth,
-				Math.floor(index / columns) * descriptor.tileheight,
-				descriptor.tilewidth,
-				descriptor.tileheight,
-				x * descriptor.tilewidth,
-				y * descriptor.tileheight,
-				descriptor.tilewidth,
-				descriptor.tileheight
-				);
-		}
-	};
-}
-
 function startGame(level, tiles) {
 	var view = {
 		x: 0,
