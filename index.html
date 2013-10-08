@@ -48,26 +48,26 @@ function startGame(level, tiles) {
 
 	var tileset = new Tileset(level, 0, tiles);
 
-	function draw() {
-		context.fillRect(0, 0, width, height);
-		var layers = level.layers;
+	function drawLayer(index) {
 		var x0 = Math.floor(view.x / level.tilewidth);
 		var y0 = Math.floor(view.y / level.tileheight);
-		for (var i = 0; i < layers.length; i++) {
-			if ((layers[i].type === 'tilelayer') && layers[i].visible) {
-				var layer = layers[i];
-				var data = layer.data;
-				var minX = Math.floor(view.x / level.tilewidth);
-				var minY = Math.floor(view.y / level.tileheight);
-				var maxX = Math.min(x0 + width / level.tilewidth, layer.width);
-				var maxY = Math.min(y0 + height / level.tileheight, layer.height);
-				for (var x = minX; x < maxX; x++) {
-					for (var y = minY; y < maxY; y++) {
-						tileset.drawTile(context, data[y * level.width + x], x, y);
-					}
-				}
+		var data = level.layers[index].data;
+		var minX = Math.floor(view.x / level.tilewidth);
+		var minY = Math.floor(view.y / level.tileheight);
+		var maxX = Math.min(x0 + width / level.tilewidth, level.layers[index].width);
+		var maxY = Math.min(y0 + height / level.tileheight, level.layers[index].height);
+		for (var x = minX; x < maxX; x++) {
+			for (var y = minY; y < maxY; y++) {
+				tileset.drawTile(context, data[y * level.width + x], x, y);
 			}
 		}
+	}
+
+	function draw() {
+		context.fillRect(0, 0, width, height);
+		drawLayer(0);
+		drawLayer(1);
+		drawLayer(2);
 	}
 
 	function loop() {
