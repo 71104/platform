@@ -4,7 +4,10 @@
 	<title>Scrolling Platform</title>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<script src="jquery-2.0.3.min.js"></script>
+	<script src="Physics.js"></script>
 	<script src="Tileset.js"></script>
+	<script src="Element.js"></script>
+	<script src="Character.js"></script>
 </head>
 <body>
 	<canvas id="canvas"></canvas>
@@ -27,6 +30,7 @@ function startGame(level, tiles) {
 	var context = canvas[0].getContext('2d');
 
 	var tileset = new Tileset(level, 0, tiles);
+	var character = new Character(level, tileset);
 
 	function drawLayer(index) {
 		var x0 = Math.floor(view.x / level.tilewidth);
@@ -48,12 +52,20 @@ function startGame(level, tiles) {
 		drawLayer(0);
 		drawLayer(1);
 		drawLayer(2);
+		character.draw(context);
 	}
 
+	var timestamp;
+
 	function loop() {
+		var lastTimestamp = timestamp;
+		timestamp = Date.now();
+		character.tick(timestamp - lastTimestamp);
 		draw();
 		requestAnimationFrame(loop);
 	}
+
+	timestamp = Date.now();
 	requestAnimationFrame(loop);
 }
 
