@@ -23,7 +23,13 @@ function Character(level, tileset) {
 		if (solidAt(x, y)) {
 			tile.x = x;
 			tile.y = y;
-			return Physics.collision(position, tile, dx, dy);
+			var collisions = Physics.collision(position, tile, dx, dy);
+			if (collisions.x) {
+				velocity.x = 0;
+			}
+			if (collision.y) {
+				velocity.y = 0;
+			}
 		} else {
 			return false;
 		}
