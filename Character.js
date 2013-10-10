@@ -8,12 +8,14 @@ function Character(level, tileset) {
 		y: 0
 	};
 
-	var acceleration = 40;
+	var acceleration = 10;
 
 	this.tick = function (dt) {
 		dt /= 1000;
-		velocity.y += acceleration * dt;
 		position.x += velocity.x * dt;
-		position.y += velocity.y * dt + acceleration * Math.pow(dt, 2);
+		position.y += velocity.y * dt + acceleration * dt * dt / 2;
+		velocity.y += acceleration * dt;
 	};
+
+	// TODO state machine
 }

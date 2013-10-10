@@ -1,60 +1,47 @@
-var Physics = new (function () {
-	var epsilon = 0.001;
-
-	this.clamp = function (x1, y1, r1, x2, y2, r2, v) {
-		var x = x2 - x1 + v.x;
-		var y = y2 - y1 + v.y;
-		var r = r1 + r2;
-		if ((x >= 0) && (x < r)) {
-			if ((y >= 0) && (y < r)) {
-				if (y > x) {
-					y2 = y1 + r + epsilon;
-					v.y = 0;
-					return true;
+var Physics = {
+	collision: function (p1, p2, dx, dy) {
+		if (p1.x < p2.x) {
+			if (p1.x + 1 < p2.x) {
+				return false;
+			} else if (p1.y < p2.y) {
+				if (p1.y + 1 < p2.y) {
+					return false;
 				} else {
-					x2 = x1 + r + epsilon;
-					v.x = 0;
+					if (p1.x + 1 - p2.x <= dx) {
+						p1.x = p2.x - 1;
+					}
+					if (p1.y + 1 - p2.y <= dy) {
+						p1.y = p2.y - 1;
+					}
 					return true;
 				}
-			} else if ((y < 0) && (y > -r)) {
-				if (-y > x) {
-					y2 = y1 - r - epsilon;
-					v.y = 0;
-					return true;
-				} else {
-					x2 = x1 + r + epsilon;
-					v.x = 0;
-					return true;
+			} else if (p1.y < p2.y + 1) {
+				if (p1.x + 1 - p2.x <= dx) {
+					p1.x = p2.x - 1;
 				}
+				if (p1.y - p2.y <= dy) {
+					p1.y = p2.y + 1;
+				}
+				return true;
 			} else {
 				return false;
 			}
-		} else if ((x < 0) && (x > -r)) {
-			if ((y >= 0) && (y < r)) {
-				if (y > -x) {
-					y2 = y1 + r + epsilon;
-					v.y = 0;
-					return true;
+		} else if (p1.x < p2.x + 1) {
+			if (p1.y < p2.y) {
+				if (p1.y + 1 < p2.y) {
+					return false;
 				} else {
-					x2 = x1 - r - epsilon;
-					v.x = 0;
+					// TODO
 					return true;
 				}
-			} else if ((y < 0) && (y > -r)) {
-				if (-y > -x) {
-					y2 = y1 - r - epsilon;
-					v.y = 0;
-					return true;
-				} else {
-					x2 = x1 - r - epsilon;
-					v.x = 0;
-					return true;
-				}
+			} else if (p1.y < p2.y + 1) {
+				// TODO
+				return true;
 			} else {
 				return false;
 			}
 		} else {
 			return false;
 		}
-	};
-})();
+	}
+};
