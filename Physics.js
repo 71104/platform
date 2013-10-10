@@ -31,11 +31,21 @@ var Physics = {
 				if (p1.y + 1 < p2.y) {
 					return false;
 				} else {
-					// TODO
+					if (p1.x - p2.x + 1 <= dx) {
+						p1.x = p2.x + 1;
+					}
+					if (p1.y + 1 - p2.y <= dy) {
+						p1.y = p2.y - 1;
+					}
 					return true;
 				}
 			} else if (p1.y < p2.y + 1) {
-				// TODO
+				if (p1.x - p2.x + 1 <= dx) {
+					p1.x = p2.x + 1;
+				}
+				if (p1.y - p2.y - 1 <= dy) {
+					p1.y = p2.y + 1;
+				}
 				return true;
 			} else {
 				return false;

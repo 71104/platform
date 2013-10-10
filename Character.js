@@ -8,7 +8,7 @@ function Character(level, tileset) {
 		y: 0
 	};
 
-	var acceleration = 10;
+	var acceleration = 75;
 
 	this.tick = function (dt) {
 		dt /= 1000;
