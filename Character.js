@@ -27,7 +27,7 @@ function Character(level, tileset) {
 			if (collisions.x) {
 				velocity.x = 0;
 			}
-			if (collision.y) {
+			if (collisions.y) {
 				velocity.y = 0;
 			}
 		} else {
@@ -41,6 +41,7 @@ function Character(level, tileset) {
 		var dy = velocity.y * dt + acceleration * dt * dt / 2;
 		position.x += dx;
 		position.y += dy;
+		velocity.y += acceleration * dt;
 
 		var x = Math.floor(position.x);
 		var y = Math.floor(position.y);
@@ -48,8 +49,6 @@ function Character(level, tileset) {
 		tileCollision(x, y + 1, dx, dy);
 		tileCollision(x + 1, y, dx, dy);
 		tileCollision(x + 1, y + 1, dx, dy);
-
-		velocity.y += acceleration * dt;
 	};
 
 	// TODO state machine

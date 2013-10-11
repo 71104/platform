@@ -17,11 +17,11 @@ var Physics = {
 						x: false,
 						y: false
 					};
-					if (p1.x + 1 - p2.x <= dx) {
+					if (p1.x + 1 <= dx + p2.x) {
 						p1.x = p2.x - 1;
 						result.x = true;
 					}
-					if (p1.y + 1 - p2.y <= dy) {
+					if (p1.y + 1 <= dy + p2.y) {
 						p1.y = p2.y - 1;
 						result.y = true;
 					}
@@ -32,11 +32,11 @@ var Physics = {
 					x: false,
 					y: false
 				};
-				if (p1.x + 1 - p2.x <= dx) {
+				if (p1.x + 1 <= dx + p2.x) {
 					p1.x = p2.x - 1;
 					result.x = true;
 				}
-				if (p1.y - p2.y <= dy) {
+				if (p1.y + 1 <= dy + p2.y) {
 					p1.y = p2.y + 1;
 					result.y = true;
 				}
@@ -59,11 +59,11 @@ var Physics = {
 						x: false,
 						y: false
 					};
-					if (p1.x - p2.x + 1 <= dx) {
+					if (p1.x + 1 <= dx + p2.x) {
 						p1.x = p2.x + 1;
 						result.x = true;
 					}
-					if (p1.y + 1 - p2.y <= dy) {
+					if (p1.y + 1 <= dy + p2.y) {
 						p1.y = p2.y - 1;
 						result.y = true;
 					}
@@ -74,11 +74,11 @@ var Physics = {
 					x: false,
 					y: false
 				};
-				if (p1.x - p2.x + 1 <= dx) {
+				if (p1.x + 1 <= dx + p2.x) {
 					p1.x = p2.x + 1;
 					result.x = true;
 				}
-				if (p1.y - p2.y - 1 <= dy) {
+				if (p1.y + 1 <= dy + p2.y) {
 					p1.y = p2.y + 1;
 					result.y = true;
 				}
