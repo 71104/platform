@@ -1,22 +1,22 @@
-var Physics = {
-	collision: function (p1, p2, dx, dy) {
+var Physics = new (function () {
+	var result = {
+		x: false,
+		y: false
+	};
+	this.collision = function (p1, p2, dx, dy) {
 		if (p1.x < p2.x) {
 			if (p1.x + 1 < p2.x) {
-				return {
-					x: false,
-					y: false
-				};
+				result.x = false;
+				result.y = false;
+				return result;
 			} else if (p1.y < p2.y) {
 				if (p1.y + 1 < p2.y) {
-					return {
-						x: false,
-						y: false
-					};
+					result.x = false;
+					result.y = false;
+					return result;
 				} else {
-					var result = {
-						x: false,
-						y: false
-					};
+					result.x = false;
+					result.y = false;
 					if (p1.x + 1 <= dx + p2.x) {
 						p1.x = p2.x - 1;
 						result.x = true;
@@ -28,10 +28,8 @@ var Physics = {
 					return result;
 				}
 			} else if (p1.y < p2.y + 1) {
-				var result = {
-					x: false,
-					y: false
-				};
+				result.x = false;
+				result.y = false;
 				if (p1.x + 1 <= dx + p2.x) {
 					p1.x = p2.x - 1;
 					result.x = true;
@@ -42,23 +40,19 @@ var Physics = {
 				}
 				return result;
 			} else {
-				return {
-					x: false,
-					y: false
-				};
+				result.x = false;
+				result.y = false;
+				return result;
 			}
 		} else if (p1.x < p2.x + 1) {
 			if (p1.y < p2.y) {
 				if (p1.y + 1 < p2.y) {
-					return {
-						x: false,
-						y: false
-					};
+					result.x = false;
+					result.y = false;
+					return result;
 				} else {
-					var result = {
-						x: false,
-						y: false
-					};
+					result.x = false;
+					result.y = false;
 					if (p1.x + 1 <= dx + p2.x) {
 						p1.x = p2.x + 1;
 						result.x = true;
@@ -70,10 +64,8 @@ var Physics = {
 					return result;
 				}
 			} else if (p1.y < p2.y + 1) {
-				var result = {
-					x: false,
-					y: false
-				};
+				result.x = false;
+				result.y = false;
 				if (p1.x + 1 <= dx + p2.x) {
 					p1.x = p2.x + 1;
 					result.x = true;
@@ -84,16 +76,14 @@ var Physics = {
 				}
 				return result;
 			} else {
-				return {
-					x: false,
-					y: false
-				};
+				result.x = false;
+				result.y = false;
+				return result;
 			}
 		} else {
-			return {
-				x: false,
-				y: false
-			};
+			result.x = false;
+			result.y = false;
+			return result;
 		}
-	}
-};
+	};
+})();
