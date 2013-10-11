@@ -30,5 +30,81 @@ function Character(level, tileset) {
 		}
 	};
 
-	// TODO state machine
+	var walkVelocity = 6;
+	var jumpVelocity = 24;
+
+	var states = {
+		still: {
+			startLeft: function () {
+				velocity.x = -walkVelocity;
+				return states.left;
+			},
+			stopLeft: function () {
+				velocity.x = walkVelocity;
+				return states.right;
+			},
+			startRight: function () {
+				velocity.x = walkVelocity;
+				return states.right;
+			},
+			stopRight: function () {
+				velocity.x = -walkVelocity;
+				return states.left;
+			}
+		},
+		left: {
+			startLeft: function () {
+				return states.left;
+			},
+			stopLeft: function () {
+				velocity.x = 0;
+				return states.still;
+			},
+			startRight: function () {
+				velocity.x = 0;
+				return states.still;
+			},
+			stopRight: function () {
+				return states.left;
+			}
+		},
+		right: {
+			startLeft: function () {
+				velocity.x = 0;
+				return states.still;
+			},
+			stopLeft: function () {
+				return states.right;
+			},
+			startRight: function () {
+				return states.right;
+			},
+			stopRight: function () {
+				velocity.x = 0;
+				return states.still;
+			}
+		}
+	};
+
+	var currentState = states.still;
+
+	this.startLeft = function () {
+		currentState = currentState.startLeft();
+	};
+
+	this.stopLeft = function () {
+		currentState = currentState.stopLeft();
+	};
+
+	this.startRight = function () {
+		currentState = currentState.startRight();
+	};
+
+	this.stopRight = function () {
+		currentState = currentState.stopRight();
+	};
+
+	this.jump = function () {
+		velocity.y = -jumpVelocity;
+	};
 }

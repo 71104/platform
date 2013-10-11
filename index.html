@@ -68,6 +68,37 @@ function startGame(level, tiles) {
 
 	timestamp = Date.now();
 	requestAnimationFrame(loop);
+
+	$(window).keydown(function (event) {
+		switch (event.which) {
+		case 37:
+			character.startLeft();
+			break;
+		case 38:
+			character.jump();
+			break;
+		case 39:
+			character.startRight();
+			break;
+		default:
+			return;
+		}
+		event.preventDefault();
+		return false;
+	}).keyup(function (event) {
+		switch (event.which) {
+		case 37:
+			character.stopLeft();
+			break;
+		case 39:
+			character.stopRight();
+			break;
+		default:
+			return;
+		}
+		event.preventDefault();
+		return false;
+	});
 }
 
 $(window).load(function () {
